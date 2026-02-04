@@ -11,6 +11,33 @@ importers:
       express:
         specifier: ^5.2.1
         version: 5.2.1
+<<<<<<< ours
+      pg:
+        specifier: ^8.18.0
+        version: 8.18.0
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
+    devDependencies:
+      '@types/pg':
+        specifier: ^8.16.0
+        version: 8.16.0
+      drizzle-kit:
+        specifier: ^0.31.8
+        version: 0.31.8
+||||||| ancestor
+=======
+      pg:
+        specifier: ^8.18.0
+        version: 8.18.0
+    devDependencies:
+      '@types/pg':
+        specifier: ^8.16.0
+        version: 8.16.0
+      drizzle-kit:
+        specifier: ^0.31.8
+        version: 0.31.8
+>>>>>>> theirs
 
 packages:
 
@@ -268,6 +295,17 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
+<<<<<<< ours
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
+
+||||||| ancestor
+=======
+  xtend@4.0.2:
+    resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
+    engines: {node: '>=0.4'}
+
+>>>>>>> theirs
 snapshots:
 
   accepts@2.0.0:
@@ -561,3 +599,11 @@ snapshots:
   vary@1.1.2: {}
 
   wrappy@1.0.2: {}
+<<<<<<< ours
+
+  zod@4.3.6: {}
+||||||| ancestor
+=======
+
+  xtend@4.0.2: {}
+>>>>>>> theirs
