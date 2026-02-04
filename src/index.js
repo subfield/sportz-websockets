@@ -1,6 +1,5 @@
-import { eq } from 'drizzle-orm';
-import { db, pool } from './db/db.js';
-import { demoUsers } from './db/schema.js';
+import express from 'express';
+import matchRouter from './routes/matches.js';
 
 async function main() {
   try {
@@ -18,36 +17,9 @@ async function main() {
     
     console.log('✅ CREATE: New user created:', newUser);
 
-    // READ: Select the user
-    const foundUser = await db.select().from(demoUsers).where(eq(demoUsers.id, newUser.id));
-    console.log('✅ READ: Found user:', foundUser[0]);
+app.use("/matches", matchRouter);
 
-    // UPDATE: Change the user's name
-    const [updatedUser] = await db
-      .update(demoUsers)
-      .set({ name: 'Super Admin' })
-      .where(eq(demoUsers.id, newUser.id))
-      .returning();
-    
-    if (!updatedUser) {
-      throw new Error('Failed to update user');
-    }
-    
-    console.log('✅ UPDATE: User updated:', updatedUser);
-
-    // DELETE: Remove the user
-    await db.delete(demoUsers).where(eq(demoUsers.id, newUser.id));
-    console.log('✅ DELETE: User deleted.');
-
-    console.log('\n✨ CRUD operations completed successfully.');
-  } catch (error) {
-    console.error('❌ Error performing CRUD operations:', error);
-    process.exit(1);
-  } finally {
-    // Close the connection pool
-    await pool.end();
-    console.log('Database pool closed.');
-  }
-}
-
-main();
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
