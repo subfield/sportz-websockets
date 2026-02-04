@@ -11,16 +11,21 @@ const sendJson = (socket, payload) => {
 
 const broadcastJson = (wss, payload) => {
     for( const client of wss.clients ) {
-        if(client.readyState !== WebSocket.OPEN) return;
+        if(client.readyState !== WebSocket.OPEN) continue;
 
         client.send(JSON.stringify(payload));
     }
 };
 
-export const attackWebSocketServer = (server) => {
+export const attachWebSocketServer = (server) => {
     const wss = new WebSocketServer({ server, path: '/ws', maxPayload: 1024 * 1024 * 2});
 
     wss.on('connection', (socket) => {
+        socket.isAlive = true;
+        socket.on('pong', () => {
+            socket.isAlive = true;
+        });
+
         console.log('Client connected');
         sendJson(socket, { type: 'welcome'});
 
@@ -28,14 +33,20 @@ export const attackWebSocketServer = (server) => {
             console.error('WebSocket error:', error);
         });
 
-        // socket.on('message', (message) => {
-        //     console.log('Received message:', message);
-        //     broadcastJson(wss, { type: 'commentary', data: message });
-        // });
+        const interval = setInterval(() => {
+            wss.clients.forEach((client) => {
+                if(client.isAlive === false) {
+                    return client.terminate();
+                }
+                client.isAlive = false;
+                client.ping();
+            });
+        }, 30000);
 
-        // socket.on('close', () => {
-        //     console.log('Client disconnected');
-        // });
+        socket.on('close', () => {
+            console.log('Client disconnected');
+            clearInterval(interval);
+        });
     });
 
     const broadcastMatchCreated = (match) => {

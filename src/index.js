@@ -1,7 +1,7 @@
 import express from 'express';
 import matchRouter from './routes/matches.js';
 import http from 'http';
-import { attackWebSocketServer } from './ws/server.js';
+import { attachWebSocketServer } from './ws/server.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 8081;
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 app.use("/matches", matchRouter);
 
-const { broadcastMatchCreated } = attackWebSocketServer(server);
+const { broadcastMatchCreated } = attachWebSocketServer(server);
 app.locals.broadcastMatchCreated = broadcastMatchCreated;
 
 // Start server
