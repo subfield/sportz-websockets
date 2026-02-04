@@ -1,16 +1,21 @@
 import express from 'express';
 import matchRouter from './routes/matches.js';
 
-const app = express();
-const PORT = 8081;
+async function main() {
+  try {
+    console.log('Performing CRUD operations...\n');
 
-// JSON middleware
-app.use(express.json());
+    // CREATE: Insert a new user
+    const [newUser] = await db
+      .insert(demoUsers)
+      .values({ name: 'Admin User', email: 'admin@example.com' })
+      .returning();
 
-// Root GET route
-app.get('/', (req, res) => {
-  res.json({ message: 'HELLO WORLD!' });
-});
+    if (!newUser) {
+      throw new Error('Failed to create user');
+    }
+    
+    console.log('✅ CREATE: New user created:', newUser);
 
 app.use("/matches", matchRouter);
 

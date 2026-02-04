@@ -1,11 +1,14 @@
 {
   "name": "ws",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple Express.js REST API server with JSON middleware running on port 8081",
   "main": "index.js",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "keywords": [],
   "author": "",
